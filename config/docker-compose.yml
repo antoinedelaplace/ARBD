@@ -1,0 +1,129 @@
+version: '2.2'
+services:
+  MASTER1:
+    container_name: ARBD_MASTER1
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DATABASE}
+    volumes:
+      - ../bdd/MASTER1/CONFIG/conf.d:/etc/mysql/mysql.conf.d/
+      - ../bdd/MASTER1/LOG:/var/log/mysql
+      - ../bdd/CONFIG:/backup
+      - ../sql:/dump
+    networks:
+      main:
+        aliases:
+          - MASTER1
+
+  MASTER2:
+    container_name: ARBD_MASTER2
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DATABASE}
+    volumes:
+      - ../bdd/MASTER2/CONFIG/conf.d:/etc/mysql/mysql.conf.d/
+      - ../bdd/MASTER2/LOG:/var/log/mysql
+      - ../bdd/CONFIG:/backup
+      - ../sql:/dump
+    networks:
+      main:
+        aliases:
+          - MASTER2
+
+  HAPROXY:
+    container_name: ARBD_HAPROXY
+    image: haproxy:latest
+    volumes:
+      - ../haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - 8080:8080
+      - 9500:80
+    depends_on:
+      - MASTER1
+      - MASTER2
+      - API1
+      - API2
+    networks:
+      main:
+        aliases:
+          - HAPROXY
+
+
+  API1:
+    image: arbd/silex-amqp:3.0
+    container_name: ARBD_API1
+    hostname: API1
+    restart: always
+    volumes:
+      - ../back:/var/www/silex
+    working_dir: /var/www/silex
+    depends_on:
+      - RABBITMQ
+    command: php -S 0.0.0.0:80 -t /var/www/silex 
+    networks:
+      main:
+        aliases:
+          - API1
+
+
+  API2:
+    image: arbd/silex-amqp:3.0
+    container_name: ARBD_API2
+    hostname: API2
+    restart: always
+    volumes:
+      - ../back:/var/www/silex
+    working_dir: /var/www/silex
+    depends_on:
+      - RABBITMQ
+    command: php -S 0.0.0.0:80 -t /var/www/silex 
+    networks:
+      main:
+        aliases:
+          - API2
+
+  PMA:
+    image: phpmyadmin/phpmyadmin
+    container_name: ARBD_PMA
+    restart: always
+    ports:
+      - 9501:80
+    environment:
+      - PMA_HOST=HAPROXY
+    volumes:
+      - ../pma/my.cnf:/etc/my.cnf
+    networks:
+      main:
+        aliases:
+          - PMA
+
+  GENERATOR:
+    image: arbd/php-amqp
+    container_name: ARBD_GEN
+    restart: always
+    volumes:
+      - ../generateur:/usr/src/gen
+    working_dir: /usr/src/gen
+    depends_on:
+      - RABBITMQ
+    command: sh run.sh
+    networks:
+      main:
+        aliases:
+          - GENERATOR
+
+  RABBITMQ:
+    container_name: ARBD_RABBITMQ
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      main:
+        aliases:
+          - RABBITMQ
+
+networks:
+  main:

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="T7FT\Entity\Commande" table="Commande">
+    <indexes>
+      <index name="Commande_fk1" columns="acheteur_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="dateCreation" type="date" column="date_creation" nullable="true"/>
+    <field name="dateLivraison" type="date" column="date_livraison" nullable="false"/>
+    <field name="horaireLivraison" type="time" column="horaire_livraison" nullable="false"/>
+    <field name="typePaiement" type="string" column="type_paiement" nullable="true"/>
+    <field name="etat" type="string" column="etat" nullable="true"/>
+    <field name="paiement" type="integer" column="paiement" nullable="true"/>
+    <many-to-one field="acheteur" target-entity="Client">
+      <join-columns>
+        <join-column name="acheteur_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

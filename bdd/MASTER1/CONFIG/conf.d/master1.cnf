@@ -1,0 +1,12 @@
+[mysqld]
+ server-id = 101
+ log_bin = /var/log/mysql/mysql-bin.log
+ binlog_do_db = speedbouffe
+ bind-address = 0.0.0.0 # make sure to bind it to all IPs, else mysql listens on 127.0.0.1
+ character_set_server = utf8
+ collation_server = utf8_general_ci
+ max_allowed_packet = 32M
+ auto-increment-increment = 2
+ auto-increment-offset = 1
+[mysql]
+ default_character_set = utf8

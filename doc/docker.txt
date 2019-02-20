@@ -1,0 +1,9 @@
+Pour démarrer le projet aller dans le dossier config et lancer le script run.sh
+Quand il est terminé, vous avez un projet initialisé avec tous les dockers fonctionnels et la base HA/LB + Replication Master-Master
+
+Lors de la modification du composer sur le projet API :
+docker exec -it ARBDD_API bash
+rm -rf composer.lock
+composer install
+rm -rf composer.lock
+composer update

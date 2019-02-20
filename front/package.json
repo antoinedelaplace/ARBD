@@ -1,0 +1,33 @@
+{
+  "name": "front-arbd",
+  "version": "0.0.0",
+  "description": "",
+  "author": "fx <>",
+  "keywords": [],
+  "dependencies": {
+    "autobind-decorator": "^2.1.0",
+    "babel-eslint": "^8.0.1",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "prop-types": "^15.6.0",
+    "ramda": "^0.25.0",
+    "react": "^15.4.2",
+    "recharts": "^1.0.0-beta.0",
+    "redux-middlewares": "^0.2.1",
+    "redux-saga": "^0.15.6",
+    "regenerator-runtime": "^0.11.0",
+    "vitaminjs": "^1.0.0"
+  },
+  "scripts": {
+    "start": "vitamin start",
+    "build": "vitamin build",
+    "serve": "vitamin serve"
+  },
+  "private": true,
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-plugin-react": "^7.4.0"
+  }
+}

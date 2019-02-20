@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="T7FT\Entity\CommandeClient" table="Commande_Client">
+    <indexes>
+      <index name="Commande_Client_fk0" columns="commande_id"/>
+      <index name="Commande_Client_fk1" columns="client_id"/>
+      <index name="Commande_Client_fk2" columns="repas_id"/>
+      <index name="Commande_Client_fk3" columns="tarif"/>
+      <index name="Commande_Client_fk4" columns="entree_id"/>
+      <index name="Commande_Client_fk5" columns="dessert_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="entree" target-entity="Entree">
+      <join-columns>
+        <join-column name="entree_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="dessert" target-entity="Dessert">
+      <join-columns>
+        <join-column name="dessert_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="tarif" target-entity="Tarif">
+      <join-columns>
+        <join-column name="tarif" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="repas" target-entity="Repas">
+      <join-columns>
+        <join-column name="repas_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="client" target-entity="Client">
+      <join-columns>
+        <join-column name="client_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="commande" target-entity="Commande">
+      <join-columns>
+        <join-column name="commande_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

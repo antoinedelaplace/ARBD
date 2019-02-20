@@ -1,0 +1,34 @@
+h2 {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 95%;
+    margin: 0 30px;
+}
+
+.stat {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+tr {
+    height: 20px;
+}
+
+tr:nth-child(even) {
+    background-color: #ffd1e0;
+}
+
+th {
+    text-align: left;
+}
+
+th, td {
+    padding: 3px;
+}

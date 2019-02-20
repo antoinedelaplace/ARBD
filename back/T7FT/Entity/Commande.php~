@@ -1,0 +1,271 @@
+<?php
+
+namespace T7FT\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Commande
+ *
+ * @ORM\Table(name="Commande", indexes={@ORM\Index(name="Commande_fk0", columns={"repas_id"}), @ORM\Index(name="Commande_fk1", columns={"acheteur_id"})})
+ * @ORM\Entity
+ */
+class Commande
+{
+    const TYPE_PAIEMENT_ESPECE = 'Espece';
+    const TYPE_PAIEMENT_CB = 'Carte';
+    const TYPE_PAIEMENT_TICKET = 'Ticket Restaurant';
+
+    const ETAT_ATTENTE = 'En attente';
+    const ETAT_COURS = 'En cours';
+    const ETAT_LIVRAISON = 'Livraison';
+    const ETAT_RECU = 'Recu';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_creation", type="date", nullable=true)
+     */
+    private $dateCreation;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_livraison", type="date", nullable=false)
+     */
+    private $dateLivraison;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="horaire_livraison", type="time", nullable=false)
+     */
+    private $horaireLivraison;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_paiement", type="string", nullable=true)
+     */
+    private $typePaiement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string", nullable=false)
+     */
+    private $etat;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="paiement", type="integer", nullable=false)
+     */
+    private $paiement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tarif", type="string", nullable=false)
+     */
+    private $tarif;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \T7FT\Entity\Client
+     *
+     * @ORM\ManyToOne(targetEntity="T7FT\Entity\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="acheteur_id", referencedColumnName="id")
+     * })
+     */
+    private $acheteur;
+
+    /**
+     * @var \T7FT\Entity\Repas
+     *
+     * @ORM\ManyToOne(targetEntity="T7FT\Entity\Repas")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="repas_id", referencedColumnName="id")
+     * })
+     */
+    private $repas;
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * @param \DateTime $dateCreation
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHoraireLivraison()
+    {
+        return $this->horaireLivraison;
+    }
+
+    /**
+     * @param \DateTime $horaireLivraison
+     */
+    public function setHoraireLivraison($horaireLivraison)
+    {
+        $this->horaireLivraison = $horaireLivraison;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateLivraison()
+    {
+        return $this->dateLivraison;
+    }
+
+    /**
+     * @param \DateTime $dateLivraison
+     */
+    public function setDateLivraison($dateLivraison)
+    {
+        $this->dateLivraison = $dateLivraison;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypePaiement()
+    {
+        return $this->typePaiement;
+    }
+
+    /**
+     * @param string $typePaiement
+     */
+    public function setTypePaiement($typePaiement)
+    {
+        if (!in_array($typePaiement, array(self::TYPE_PAIEMENT_CB, self::TYPE_PAIEMENT_ESPECE, self::TYPE_PAIEMENT_TICKET)))
+            throw new \InvalidArgumentException("Type de paiement Invalide");
+        $this->typePaiement = $typePaiement;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param string $etat
+     */
+    public function setEtat($etat)
+    {
+        if (!in_array($etat, array(self::ETAT_ATTENTE, self::ETAT_COURS, self::ETAT_LIVRAISON, self::ETAT_RECU)))
+            throw new \InvalidArgumentException("Etat de la commande Invalide");
+        $this->etat = $etat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaiement()
+    {
+        return $this->paiement;
+    }
+
+    /**
+     * @param int $paiement
+     */
+    public function setPaiement($paiement)
+    {
+        if ($paiement != 1 && $paiement != 0)
+            throw new \InvalidArgumentException("Paiement Invalide");
+        $this->paiement = $paiement;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTarif()
+    {
+        return $this->tarif;
+    }
+
+    /**
+     * @param string $tarif
+     */
+    public function setTarif($tarif)
+    {
+        $this->tarif = $tarif;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getAcheteur()
+    {
+        return $this->acheteur;
+    }
+
+    /**
+     * @param Client $acheteur
+     */
+    public function setAcheteur($acheteur)
+    {
+        $this->acheteur = $acheteur;
+    }
+
+    /**
+     * @return Repas
+     */
+    public function getRepas()
+    {
+        return $this->repas;
+    }
+
+    /**
+     * @param Repas $repas
+     */
+    public function setRepas($repas)
+    {
+        $this->repas = $repas;
+    }
+
+
+
+
+}

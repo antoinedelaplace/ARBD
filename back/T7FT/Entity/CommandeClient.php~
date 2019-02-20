@@ -1,0 +1,47 @@
+<?php
+
+namespace T7FT\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CommandeClient
+ *
+ * @ORM\Table(name="Commande_Client", indexes={@ORM\Index(name="Commande_Client_fk0", columns={"commande_id"}), @ORM\Index(name="Commande_Client_fk1", columns={"client_id"})})
+ * @ORM\Entity
+ */
+class CommandeClient
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \T7FT\Entity\Client
+     *
+     * @ORM\ManyToOne(targetEntity="T7FT\Entity\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * })
+     */
+    private $client;
+
+    /**
+     * @var \T7FT\Entity\Commande
+     *
+     * @ORM\ManyToOne(targetEntity="T7FT\Entity\Commande")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="commande_id", referencedColumnName="id")
+     * })
+     */
+    private $commande;
+
+
+
+
+}

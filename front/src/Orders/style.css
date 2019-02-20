@@ -1,0 +1,60 @@
+.tr:nth-child(even) {
+    background-color: #ffd1e0;
+}
+
+.td {
+    flex: 1;
+    text-align: center;
+}
+
+.popup {
+    position: fixed;
+    background-color: #ffdfe9;
+    width: 800px;
+    height: 400px;
+    padding: 16px;
+}
+
+.shadow {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cross {
+    border: none;
+    background: none;
+    font-size: 24px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #FE5B5F;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.container {
+    width: 850px;
+}
+
+.tr {
+    display: flex;
+    padding: 8px;
+    margin-right: 0;
+}
+
+.paginator {
+    padding: 6px;
+    background-color: #FE5B5F;
+    color: white;
+    font-size: 14px;
+    margin-top: 16px;
+    flex: 0 0 45px;
+
+}

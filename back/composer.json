@@ -1,0 +1,17 @@
+{
+	"require": {
+		"silex/silex": "~2.0",
+		"doctrine/orm": "2.4.*",
+		"jdesrosiers/silex-cors-provider": "^1.4",
+		"symfony/twig-bridge": "2.4.x",
+		"symfony/validator": "2.4.x",
+		"knplabs/console-service-provider": "^2.1",
+		"symfony/yaml": "*",
+		"php-amqplib/php-amqplib": ">=2.6.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"T7FT\\": "T7FT/"
+		}
+	}
+}
